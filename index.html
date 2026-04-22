@@ -101,6 +101,7 @@
             width: 100%;
             padding-bottom: 100%;
             margin-bottom: 16px;
+            touch-action: none;
         }
 
         .board {
@@ -557,6 +558,10 @@
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
         }, { passive: true });
+
+        boardEl.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
 
         boardEl.addEventListener('touchend', (e) => {
             if (touchStartX == null) return;
