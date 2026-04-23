@@ -1,25 +1,229 @@
-小中心a-grde(135dg,#0f029, #302b63, #24243)or#fffhedpding48 16px 32px}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小游戏中心</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    .eaderh {fot-size3    font-weight: 700;    background: linear-gradient(90deg, #f797e,#ffd200);-webkit-backgrudclptetbk-text-fill-colortransparentbakgrund-ciptxt8p font-ize16plorrga(255,255,255,0.6)}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0e0e1a;
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
 
-    .gmes-rid {
-            maxwdh800px: 0 au;
-            padding0  48pxdiplay:grid;grd-temte-columnsrepeat(auto-il, minmax(220p, 1fr))20game-adrg(255,255,255,0.8)1 solid rgba(255,255,255,0.1)border-rus16paddg2px 2text-deatin:non;colr#ffftrasion: ransform.2s,background0.2s,bx-shadw0.2scuointdilyblockgame-ad:hrtransrm: traslaeY(4)backgrudrgba(255,255,255,.14)bx-shadw 0 8px 32pxrgba(0,0,0,0.3)game-a:actv{trsfrtranslateY(-)game-icoft-size5pxmargin-bttm1pxisplayblck}
-.game-crh {20mag-bom8pxgam-cadp ft-size14pxcolor:rg(255,255,255,0.5);lie-height15tgdsplayinn-blockmargn-op2px4px 2pxrder-radius20fn-sze12px;
-            ft-wight: 600tag-puzzle { ckgoun:rgba(237,194,46,0.2);color:#ffd200;}
-.tag-acon { backgrudrgb(255,75,75,0.2); cor: #ff6b6b }.tag-classic{backgrundrgba(81,207,102,.2)color:#51cf66;}
+        /* 背景装饰 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(244, 114, 182, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.04) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
 
-@mdia (max-widh52px) {.games-gr{    grid-tmplae-columnsfr}.hea h1 { fontsze2 }}
-</style>
-</hed>
-<boy>
-    <v class="header">
-       <h>🎮 小游戏中心</h1><p>选一个游戏，开始玩吧</p>
-</v>
-    <div css="ames-g"><acss="gamard"hf="gmes/208/"><san css="gamicn">🔢</n><h2>248</h2>    <p>滑动合并数字，挑战最高分</p>    <span ass="tagtag-puzzle">益智</span></a>
-    < lass="ame-ca"hef="mes/shooter/">
-<spanclass="gamcon">🚀</an>    <h2>打飞机</h2>   <p>操控战机，消灭敌人</p><san clas="tag tag-ac">动作</spn>     </a>
-<aclass="game-card"href="games/snake/"> <spancass="gam-icon">🐍</san><h2>贪吃蛇</2><p>经典贪吃蛇，越吃越长</><sa class="tag agclassic">经典</pa>    </a>
-</div>
+        .page { position: relative; z-index: 1; }
+
+        /* 顶部 */
+        .hero {
+            text-align: center;
+            padding: 64px 24px 40px;
+        }
+
+        .hero-emoji {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 16px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+        }
+
+        /* 游戏列表 */
+        .games {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 20px 64px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .game-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 24px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-card:active {
+            transform: translateY(0);
+        }
+
+        /* 游戏图标 */
+        .game-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            flex-shrink: 0;
+        }
+
+        .icon-2048    { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .icon-shooter { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .icon-snake   { background: linear-gradient(135deg, #22c55e, #16a34a); }
+
+        /* 游戏信息 */
+        .game-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .game-info h2 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .game-info p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.4;
+        }
+
+        /* 标签 */
+        .tag {
+            flex-shrink: 0;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .tag-puzzle  { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .tag-action  { background: rgba(239, 68, 68, 0.15);  color: #f87171; }
+        .tag-classic { background: rgba(34, 197, 94, 0.15);   color: #4ade80; }
+
+        /* 箭头 */
+        .arrow {
+            flex-shrink: 0;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 18px;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .game-card:hover .arrow {
+            color: rgba(255, 255, 255, 0.5);
+            transform: translateX(3px);
+        }
+
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 0 20px 40px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 响应式 */
+        @media (max-width: 480px) {
+            .hero { padding: 48px 20px 32px; }
+            .hero h1 { font-size: 26px; }
+            .game-card { padding: 16px 18px; gap: 14px; }
+            .game-icon { width: 52px; height: 52px; font-size: 24px; border-radius: 14px; }
+            .game-info h2 { font-size: 15px; }
+            .tag { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="hero">
+            <span class="hero-emoji">🎮</span>
+            <h1>小游戏中心</h1>
+            <p>选一个游戏，开始玩吧</p>
+        </div>
+
+        <div class="games">
+            <a class="game-card" href="games/2048/">
+                <div class="game-icon icon-2048">🔢</div>
+                <div class="game-info">
+                    <h2>2048</h2>
+                    <p>滑动合并数字，挑战最高分</p>
+                </div>
+                <span class="tag tag-puzzle">益智</span>
+                <span class="arrow">›</span>
+            </a>
+
+            <a class="game-card" href="games/shooter/">
+                <div class="game-icon icon-shooter">🚀</div>
+                <div class="game-info">
+                    <h2>打飞机</h2>
+                    <p>操控战机，消灭敌人</p>
+                </div>
+                <span class="tag tag-action">动作</span>
+                <span class="arrow">›</span>
+            </a>
+
+            <a class="game-card" href="games/snake/">
+                <div class="game-icon icon-snake">🐍</div>
+                <div class="game-info">
+                    <h2>贪吃蛇</h2>
+                    <p>经典贪吃蛇，越吃越长</p>
+                </div>
+                <span class="tag tag-classic">经典</span>
+                <span class="arrow">›</span>
+            </a>
+        </div>
+
+        <div class="footer">更多游戏即将上线</div>
+    </div>
 </body>
 </html>
